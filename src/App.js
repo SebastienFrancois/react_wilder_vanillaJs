@@ -1,41 +1,44 @@
-import React from "react";
-// Components 
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+// Components
 import Header from "./components/Header";
-import WilderCard from "./components/WilderCard";
-// Mui 
-import { CssBaseline } from '@mui/material';
-
-const wilderExample = {
-  "_id": "6228cc82f6b4850ed0fa3e3e",
-  "name": "New Seb",
-  "skills": [
-      {
-          "title": "Java",
-          "votes": 600,
-          "_id": "6229b898bdff75156b0248fb"
-      },
-      {
-          "title": "React",
-          "votes": 1000,
-          "_id": "6229c7f47245869cba25bab6"
-      },
-      {
-          "title": "Css",
-          "votes": 10000,
-          "_id": "6229cbeaa9930126254071e3"
-      }
-  ],
-  "completed": "in progress",
-  "__v": 2
-}
-
+import CardsList from "./components/CardsList";
+import AddWilder from "./components/AddWilder";
+// Mui
+import { CssBaseline } from "@mui/material";
 
 function App() {
+  const [open, setOpen] = React.useState(false);
+  const [wilders, setWilders] = useState([]);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const url = "http://localhost:5000/api/wilder/";
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const data = await axios.get(url);
+      setError("");
+      setWilders(data.data);
+      setIsLoading(false);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="App">
-        <CssBaseline enableColorScheme/>
-        <Header />
-        {/* <WilderCard wilder={wilderExample} />  */}
+      <CssBaseline enableColorScheme />
+      <Header />
+      <CardsList handleOpen={handleOpen} fetchData={fetchData} wilders={wilders} error={error} />
+      <AddWilder
+        open={open}
+        handleClose={handleClose}
+        fetchData={fetchData}
+      />
     </div>
   );
 }

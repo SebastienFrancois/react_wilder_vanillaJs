@@ -1,13 +1,46 @@
-import React from 'react'
-import Skill from './Skill'
+// Libs
+import React from "react";
+import PropTypes from "prop-types";
+// Components
+import Skill from "./Skill";
+// Mui
+import { Card, CardContent, Grid, Typography } from "@mui/material";
+// Assets
+import profilePic from "../assets/ladyprofile.jpg";
 
-function WilderCard() {
+function WilderCard({ wilder }) {
+  const { name, description, skills } = wilder;
+
   return (
-    <>
-    WilderCard
-    <Skill skill={wilder.skills}/>
-    </>
-  )
+    <Card sx={{ maxWidth: 250, ml: 2, p:1 }}>
+      <img src={profilePic} width="100%" />
+      <CardContent>
+        <Typography gutterBottom variant="h6" component="div" color="#F87A7A">
+          {name}
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          {description ||
+            "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt aperiam maxime laborum amet impedit quam repudiandae sint iste! Quia saepe distinctio praesentium architecto dignissimos fugit doloremque consectetur optio error alias."}
+        </Typography>
+      </CardContent>
+      <Typography variant="h7 " color={"#F87A7A"} sx={{ ml: 2 }}>
+        Wild Skills
+      </Typography>
+      <Grid container spacing={1} justifyContent="start" >
+        {skills.length > 0
+          ? skills.map((skill, i) => (
+              <Grid item key={i}>
+                <Skill skill={skill} />
+              </Grid>
+            ))
+          : ""}
+      </Grid>
+    </Card>
+  );
 }
 
-export default WilderCard
+WilderCard.propTypes = {
+  wilder: PropTypes.object,
+};
+
+export default WilderCard;
