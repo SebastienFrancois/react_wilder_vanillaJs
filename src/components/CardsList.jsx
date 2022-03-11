@@ -46,7 +46,7 @@ function CardsList({ handleOpen, fetchData, wilders, isLoading, error }) {
         ) : (
           wilders.map((wilder, i) => (
             <Grid item xs={12} sm={8} md={6} lg={4} key={i}>
-              <WilderCard wildeer={wilder} />
+              <WilderCard wilder={wilder} fetchData={fetchData} />
             </Grid>
           ))
         )}
