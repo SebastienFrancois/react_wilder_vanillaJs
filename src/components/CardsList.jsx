@@ -15,6 +15,18 @@ function CardsList({ handleOpen, fetchData, wilders, isLoading, error }) {
 
   return (
     <Box sx={{ flexGrow: 1, pr: "20%", pl: "20%", mb: "10%" }}>
+        <Box mt={3} fullWidth sx={{ textAlign: "center" }}>
+        {error ? <Typography variant="body2">{error}</Typography> : ""}
+        <Button variant="outlined" color="primary" onClick={fetchData}>
+          Reload
+        </Button>
+      </Box>
+      <Box mt={3} fullWidth sx={{ textAlign: "center" }}>
+        {error ? <Typography variant="body2">{error}</Typography> : ""}
+        <Button variant="outlined" color="primary" onClick={handleOpen}>
+          Add
+        </Button>
+      </Box>
       <Typography
         variant="h5"
         sx={{ fontWeight: "bold", marginBottom: "inherit" }}
@@ -34,23 +46,11 @@ function CardsList({ handleOpen, fetchData, wilders, isLoading, error }) {
         ) : (
           wilders.map((wilder, i) => (
             <Grid item xs={12} sm={8} md={6} lg={4} key={i}>
-              <WilderCard wilder={wilder} />
+              <WilderCard wildeer={wilder} />
             </Grid>
           ))
         )}
       </Grid>
-      <Box mt={3} fullWidth sx={{ textAlign: "center" }}>
-        {error ? <Typography variant="body2">{error}</Typography> : ""}
-        <Button variant="outlined" color="primary" onClick={fetchData}>
-          Reload
-        </Button>
-      </Box>
-      <Box mt={3} fullWidth sx={{ textAlign: "center" }}>
-        {error ? <Typography variant="body2">{error}</Typography> : ""}
-        <Button variant="outlined" color="primary" onClick={handleOpen}>
-          Add
-        </Button>
-      </Box>
     </Box>
   );
 }

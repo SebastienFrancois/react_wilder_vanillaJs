@@ -12,7 +12,7 @@ function WilderCard({ wilder }) {
   const { name, description, skills } = wilder;
 
   return (
-    <Card sx={{ maxWidth: 250, ml: 2, p:1 }}>
+    <Card sx={{ maxWidth: 250, ml: 2, p: 1, height: '100%' }}>
       <img src={profilePic} width="100%" />
       <CardContent>
         <Typography gutterBottom variant="h6" component="div" color="#F87A7A">
@@ -26,7 +26,7 @@ function WilderCard({ wilder }) {
       <Typography variant="h7 " color={"#F87A7A"} sx={{ ml: 2 }}>
         Wild Skills
       </Typography>
-      <Grid container spacing={1} justifyContent="start" >
+      <Grid container spacing={1} justifyContent="start">
         {skills.length > 0
           ? skills.map((skill, i) => (
               <Grid item key={i}>

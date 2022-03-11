@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { isEmpty } from "lodash";
 import PropTypes from "prop-types";
 // Mui
 import {
@@ -11,35 +12,51 @@ import {
   TextField,
 } from "@mui/material";
 import axios from "axios";
-import { isEmpty } from "lodash";
+// Utils
+import { ROOT_API_URL } from "../utils/urls";
 
 function AddWilder({ open, handleClose, fetchData }) {
   const [newWilder, setNewWilder] = useState({
     name: "",
     city: "",
+    description: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [submitDisabled, setSubmitDisabled] = useState(true);
+
   const handleChange = (event) => {
     setNewWilder({ ...newWilder, [event.target.name]: event.target.value });
   };
- 
+
+  const resetInput = () => {
+    setNewWilder({
+      name: "",
+      city: "",
+      description: "",
+    });
+  };
+
   const onSubmit = async () => {
-    try{
-      await axios.post('http://localhost:5000/api/wilder/', newWilder)
-      fetchData()
-      handleClose()
-    } catch(err) {
+    try {
+      const postedDatas = await axios.post(ROOT_API_URL, newWilder);
+      resetInput();
+      fetchData();
+      handleClose();
+    } catch (err) {
       if (error.response) {
         setError(error.response.data.message);
       } else {
         setError(error.message);
       }
     }
-  }
+  };
 
-  // useEffect(() => {
-  //   if(isEmpty(newWilder.name ||new))
-  // },[newWilder])
+  useEffect(() => {
+    if (isEmpty(newWilder.name && newWilder.city && newWilder.description)) {
+      return setSubmitDisabled(true);
+    }
+    setSubmitDisabled(false);
+  }, [newWilder]);
 
   return (
     <div>
@@ -68,7 +85,7 @@ function AddWilder({ open, handleClose, fetchData }) {
               p: 4,
               borderRadius: 5,
             }}
-            >
+          >
             <Box
               component="form"
               sx={{
@@ -76,7 +93,7 @@ function AddWilder({ open, handleClose, fetchData }) {
               }}
               noValidate
               autoComplete="off"
-              onSubmit={e => e.preventDefault()}
+              onSubmit={(e) => e.preventDefault()}
             >
               <div>
                 <TextField
@@ -96,9 +113,25 @@ function AddWilder({ open, handleClose, fetchData }) {
                   placeholder="London"
                   onChange={handleChange}
                 />
+                <TextField
+                  name="description"
+                  id="outlined-disabled"
+                  label="Description"
+                  multiline
+                  rows={4}
+                  value={newWilder.description}
+                  placeholder="Write a bit about yourself"
+                  onChange={handleChange}
+                />
               </div>
               {error ? <Typography variant="body2">{error}</Typography> : ""}
-              <Button type='submit' onClick={onSubmit}>Enregistrer</Button>
+              <Button
+                type="submit"
+                onClick={onSubmit}
+                disabled={submitDisabled}
+              >
+                Enregistrer
+              </Button>
             </Box>
           </Box>
         </Fade>
