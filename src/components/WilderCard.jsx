@@ -13,7 +13,7 @@ import profilePic from "../assets/ladyprofile.jpg";
 import { ROOT_API_URL } from "../utils/urls";
 
 function WilderCard({ wilder, fetchData }) {
-  const { name, description, skills } = wilder;
+  const { name, description, skills, _id } = wilder;
 
   const handleDelete = async () => {
     try {
@@ -43,7 +43,7 @@ function WilderCard({ wilder, fetchData }) {
         {skills.length > 0
           ? skills.map((skill, i) => (
               <Grid item key={i}>
-                <Skill skill={skill} />
+                <Skill skill={skill} id={_id} fetchData={fetchData} />
               </Grid>
             ))
           : ""}

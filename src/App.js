@@ -7,7 +7,7 @@ import AddWilder from "./components/AddWilder";
 // Mui
 import { CssBaseline } from "@mui/material";
 // Utils
-import {ROOT_API_URL} from './utils/urls';
+import { ROOT_API_URL } from "./utils/urls";
 
 function App() {
   const [open, setOpen] = React.useState(false);
@@ -34,12 +34,13 @@ function App() {
     <div className="App">
       <CssBaseline enableColorScheme />
       <Header />
-      <CardsList handleOpen={handleOpen} fetchData={fetchData} wilders={wilders} error={error} />
-      <AddWilder
-        open={open}
-        handleClose={handleClose}
+      <CardsList
+        handleOpen={handleOpen}
         fetchData={fetchData}
+        wilders={wilders}
+        error={error}
       />
+      <AddWilder open={open} handleClose={handleClose} fetchData={fetchData} />
     </div>
   );
 }

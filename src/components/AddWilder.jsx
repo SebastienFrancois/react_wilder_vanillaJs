@@ -98,7 +98,6 @@ function AddWilder({ open, handleClose, fetchData }) {
               <div>
                 <TextField
                   name="name"
-                  required
                   id="outlined-required"
                   label="Name"
                   value={newWilder.name}
